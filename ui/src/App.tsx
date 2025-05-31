@@ -709,7 +709,7 @@ function App() {
   // Enhanced styles with more effects
   const glassStyle = "backdrop-filter backdrop-blur-xl bg-gradient-to-br from-white/10 via-white/5 to-white/10 border border-white/20 shadow-2xl";
   const glassCardStyle = `${glassStyle} rounded-3xl p-8 transition-all duration-500 hover:shadow-3xl hover:scale-[1.02] hover:border-white/30`;
-  const glassInputStyle = `${glassStyle} pl-12 w-full rounded-2xl py-4 px-6 text-white shadow-lg focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/40 focus:shadow-cyan-400/20 placeholder-gray-400 bg-gradient-to-r from-white/5 to-white/10 transition-all duration-300`;
+  const glassInputStyle = `${glassStyle} pl-12 w-full rounded-2xl py-4 px-6 text-black shadow-lg focus:border-cyan-400/60 focus:outline-none focus:ring-2 focus:ring-cyan-400/40 focus:shadow-cyan-400/20 placeholder-gray-400 bg-gradient-to-r from-white/5 to-white/10 transition-all duration-300`;
   const glassButtonStyle = "group relative w-full mt-8 inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-2xl hover:shadow-cyan-500/50 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 hover:shadow-3xl overflow-hidden";
 
   const fadeInAnimation = "transition-all duration-700 ease-out transform";
