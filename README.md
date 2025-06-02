@@ -1,234 +1,227 @@
-📁 Repository Contents
-Backend (FastAPI, Python)
+🔍 Analyze-360
+Analyze-360 is an AI-powered, full-stack due diligence tool designed for seamless company research. It features a modular research graph, real-time status tracking via WebSockets, Markdown-to-PDF reporting, and optional MongoDB persistence for historical traceability.
 
-application.py – FastAPI entrypoint (HTTP & WebSocket)
+🚀 Features
+🔗 Modular Research Pipeline
+Customizable graph of intelligent nodes:
+Company Overview • Industry Trends • Financial Summary • News Aggregation
 
-backend/graph.py – Builds & runs the research graph
+📡 Real-Time Status Updates
+Live WebSocket feed tracks progress across research stages.
 
-backend/nodes/ – Researcher node modules (company, industry, financials, etc.)
+📝 Markdown → 📄 PDF Reports
+Beautiful, downloadable reports generated from Markdown.
 
-backend/utils/ – Markdown helpers & PDF conversion
+🧠 AI-Powered Engine
+Powered by OpenAI GPT, Tavily, and Google Gemini (configurable per project).
 
-backend/services/ – MongoDBService, PDFService, WebSocketService
+💾 MongoDB Persistence (Optional)
+Retain job metadata, node outputs, and reports across sessions.
 
-Frontend (React, TypeScript, Vite, Tailwind CSS)
+🧱 Tech Stack
+🔧 Backend
+FastAPI, Uvicorn, Python, Pydantic
 
-ui/src/ – React components & WebSocket client logic
+💻 Frontend
+React, Vite, TypeScript, Tailwind CSS, Lucide Icons
 
-ui/public/ – Static assets
+🤖 AI Models
+OpenAI GPT (default)
 
-ui/package.json – Frontend dependencies & scripts
+Tavily API
 
-Config & Scripts
+Google Gemini
 
-langgraph.json – Node definitions & execution order
+📚 Docs
+Swagger UI available at: /docs
 
-langgraph_entry.py – CLI entrypoint for offline runs
+📂 Project Structure
+bash
+Copy
+Edit
+Analyze-360/
+├── application.py         # FastAPI entrypoint
+├── backend/
+│   ├── graph.py           # Research graph builder/executor
+│   ├── nodes/             # Modular researcher logic
+│   ├── utils/             # Markdown → PDF utilities
+│   └── services/          # WebSocket, MongoDB, PDF services
+├── reports/               # Generated PDFs (gitignored)
+├── ui/                    # React frontend
+│   ├── src/               # Components & logic
+│   ├── public/            # Static assets
+│   └── package.json       # Frontend config
+├── langgraph.json         # Node configs & DAG structure
+├── langgraph_entry.py     # CLI-based execution
+├── requirements.txt       # Python deps
+├── setup.sh               # Setup script
+├── .env.example           # Backend env template
+├── ui/.env.example        # Frontend env template
+├── demo/
+│   └── Analyze-360-demo.mp4
+└── README.md
+⚙️ Prerequisites
+Python 3.9+
 
-requirements.txt – Python dependencies
+Node.js 16+
 
-setup.sh – Virtual environment & env-var setup
+MongoDB (optional, for persistence)
 
-.env.example – Environment variable template
-
-Demo Video
-
-demo/Analyze-360-demo.mp4 – 5-minute walkthrough (setup, features, error handling)
-
-Docs & Metadata
-
-README.md – This file
-
-LICENSE – MIT License
-
-.gitignore – Standard ignores
-
-🚀 Setup Instructions
-All commands assume you are in the project’s root directory.
-
-Clone & Enter
-
+🛠️ Installation Guide
+1. 📦 Clone the Repo
 bash
 Copy
 Edit
 git clone https://github.com/rithiksingh/Analyze-360.git
 cd Analyze-360
-Backend
+2. 🧠 Backend Setup
+Create & activate a virtual environment:
 
 bash
 Copy
 Edit
 python3 -m venv .venv
-source .venv/bin/activate          # macOS/Linux
-# .\.venv\Scripts\activate         # Windows PowerShell
+source .venv/bin/activate       # macOS/Linux
+# .\.venv\Scripts\activate      # Windows
+Install dependencies:
+
+bash
+Copy
+Edit
+pip install --upgrade pip
 pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your OPENAI_API_KEY, TAVILY_API_KEY, GEMINI_API_KEY, MONGODB_URI
+Set up environment variables:
+
+env
+Copy
+Edit
+# .env
+OPENAI_API_KEY=your_openai_key
+TAVILY_API_KEY=your_tavily_key
+GEMINI_API_KEY=your_gemini_key
+MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/db
+Start the FastAPI server:
+
+bash
+Copy
+Edit
 uvicorn application:app --reload --port 8000
-Visit http://localhost:8000/docs for Swagger UI
+Docs: http://localhost:8000/docs
 
 WebSocket: ws://localhost:8000/ws/status
 
-Frontend
+3. 💻 Frontend Setup
+Open a new terminal window:
 
 bash
 Copy
 Edit
 cd ui
 npm install
-cp .env.example .env
-# In ui/.env: set VITE_API_URL=http://localhost:8000 and VITE_WS_URL=ws://localhost:8000/ws/status
+Set up environment variables:
+
+env
+Copy
+Edit
+# ui/.env
+VITE_API_URL=http://localhost:8000
+VITE_WS_URL=ws://localhost:8000/ws/status
+Run the dev server:
+
+bash
+Copy
+Edit
 npm run dev
-Open http://localhost:5173
+Open in browser: http://localhost:5173
 
-🏗 Architecture Overview
-graphql
+🧪 Usage
+Launch the UI.
+
+Enter a company name or ticker.
+
+Click Start Research.
+
+Watch real-time updates flow in.
+
+View the final report and click Download PDF.
+
+🧩 Architecture Overview
+Research Graph
+DAG of nodes defined in langgraph.json and executed in backend/graph.py.
+
+WebSocketService
+Broadcasts live updates (in_progress → completed/failed).
+
+PDFService
+Converts Markdown to styled PDF at reports/{job_id}.pdf.
+
+MongoDBService (optional)
+Stores metadata, intermediate results, and final reports.
+
+React Frontend
+Submits jobs, listens to WebSocket, and displays UI timeline.
+
+🏅 Bonus Features
+✅ Real-Time Status Timeline
+Live WebSocket events with timestamps & visual updates.
+
+✅ MongoDB Historical Storage
+View and re-download reports from previous jobs.
+
+✅ PDF Downloads
+Export beautiful, clean Markdown reports.
+
+✅ Error Handling
+Node-level try/catch with MongoDB logging.
+
+✅ Scalable Architecture
+Easily extend graph nodes via langgraph.json.
+
+✅ Secure by Design
+
+API keys via environment variables
+
+Pydantic input validation
+
+CORS-protected endpoints
+
+✅ Creative UI
+
+Responsive Tailwind CSS
+
+Dark/Light Mode
+
+Collapsible Timeline Panels
+
+LLM Chat Transcript Viewer
+
+🤝 Contributing
+Fork the repo
+
+Create a feature branch:
+
+bash
 Copy
 Edit
-Analyze-360/
-├── application.py            # FastAPI HTTP routes & WebSocket manager
-├── backend/
-│   ├── graph.py              # Builds & runs research graph
-│   ├── nodes/                # Research modules (LLM calls & scraping)
-│   ├── utils/                # Markdown & PDF helpers
-│   └── services/             # MongoDB, PDF, WebSocket services
-├── ui/                       # React frontend (Vite, TS, Tailwind)
-├── langgraph.json            # Defines nodes & dependencies
-├── langgraph_entry.py        # CLI runner for the graph
-├── requirements.txt          # Backend dependencies
-├── setup.sh                  # Env setup script
-├── .env.example              # Env var template
-└── README.md                 # This file
-📜 API Summary
-POST /research/start
-Request:
+git checkout -b feature/YourFeature
+Commit and push:
 
-json
+bash
 Copy
 Edit
-{
-  "company_identifier": "string",
-  "graph_config": { /* optional overrides */ }
-}
-Response:
+git add .
+git commit -m "Add <feature>"
+git push origin feature/YourFeature
+Open a Pull Request 🚀
 
-json
-Copy
-Edit
-{
-  "job_id": "string",
-  "status": "queued"
-}
-GET /research/{job_id}
-Returns job status, node list, timestamps.
+📚 References
+OpenAI
 
-GET /research/{job_id}/report
-Returns full Markdown report (text/markdown).
+Tavily
 
-POST /research/{job_id}/generate-pdf
-Returns:
+Google Gemini
 
-json
-Copy
-Edit
-{
-  "pdf_url": "/reports/{job_id}.pdf"
-}
-WebSocket /ws/status
-Client handshake:
+📬 Contact
+Author: Rithik Singh
+📧 Email: Hrithiksingh.hst@gmail.com
 
-json
-Copy
-Edit
-{
-  "action": "subscribe",
-  "job_id": "optional"
-}
-Server messages:
-
-json
-Copy
-Edit
-{
-  "job_id": "string",
-  "node_name": "string",
-  "status": "in_progress" | "completed" | "failed",
-  "timestamp": "ISO8601"
-}
-▶️ Running Instructions
-Start backend & frontend (see Setup).
-
-Navigate to http://localhost:5173.
-
-Enter a company identifier (e.g., “AAPL”) and click Start Research.
-
-Watch the live progress timeline.
-
-View the Markdown report when complete.
-
-Click Download PDF to save the report locally.
-
-🎥 Demo Video
-See demo/Analyze-360-demo.mp4 for a 5-minute walkthrough covering setup, features, and error handling.
-
-🏅 Bonus Features Implemented
-Real-Time Status Updates
-
-WebSocket endpoint (/ws/status) broadcasts node status with timestamps.
-
-React frontend renders a live progress timeline.
-
-MongoDB Persistence Layer
-
-All jobs, node outputs, and final reports are stored in MongoDB when MONGODB_URI is set.
-
-Query past jobs via REST (GET /research/{job_id}) without re-running.
-
-Downloadable Output (PDF Generation)
-
-Consolidated Markdown is converted to PDF via PDFService.
-
-PDF saved to /reports/{job_id}.pdf and returned by POST /research/{job_id}/generate-pdf.
-
-Frontend’s “Download PDF” button triggers the file download.
-
-Error Handling & Monitoring
-
-Each node wrapped in try/catch; failures logged to console and MongoDB “errors” collection.
-
-Frontend displays user-friendly error messages and retry options.
-
-Scalability Considerations
-
-Research graph defined in langgraph.json and executed dynamically, allowing easy addition/removal of nodes.
-
-deploy/ contains a Dockerfile and Kubernetes manifest for containerization & horizontal scaling.
-
-Security Considerations
-
-Environment variables protect API keys (no hard-coded secrets).
-
-CORS restricted to trusted origins in application.py.
-
-Pydantic validation on all incoming requests.
-
-Creative UI/UX
-
-Responsive design (Tailwind CSS) for desktop & mobile.
-
-Dark/light mode toggle (CSS variables).
-
-Collapsible panels in the timeline for detailed node outputs.
-
-“Research Chat” component stores history of user inputs and LLM replies.
-
-📝 Notes & Assumptions
-Company Identifier can be a ticker or full name. If ambiguous, the “Company Overview” node uses LLM prompts to infer the correct entity.
-
-Data Sources: All research (financials, industry, news) is synthesized via LLM calls (OpenAI, Tavily, Gemini). Future versions could integrate dedicated data APIs.
-
-Persistence: If MONGODB_URI is not set, all data remains in-memory (until server restart).
-
-🤝 Contact
-Author: Hrithik Singh
-Email: hrithiksingh.hst@gmail.com
