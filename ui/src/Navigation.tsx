@@ -17,7 +17,7 @@ export default function Navigation({
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 bg-black/30 backdrop-blur-sm shadow-md">
+    <nav className="fixed inset-x-0 top-0 z-50 bg-black/80 backdrop-blur-sm shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
