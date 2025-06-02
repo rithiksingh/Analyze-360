@@ -1,211 +1,208 @@
-# 🔍 Analyze-360
+🔍 Analyze-360
+An AI-powered, full-stack application for in-depth company due diligence. Analyze-360 combines LangGraph, OpenAI, Tavily, and a modern React UI to research companies, stream real-time WebSocket updates, and produce polished PDF reports.
 
-**Analyze-360** is an AI-powered, full-stack due diligence tool for deep company research. It features modular research pipelines, real-time WebSocket updates, Markdown → PDF report generation, and optional MongoDB persistence.
+🚀 Features
+AI-Driven Research Pipeline
+Modular graph of researcher nodes: Company Overview, Industry Analysis, Financial Summary, and News Aggregation.
 
----
+Streaming Status Updates
+Real-time progress visualization over WebSockets as each node completes.
 
-## 🚀 Features
+PDF Report Generation
+Compiles Markdown into styled, downloadable PDF files.
 
-- 🔗 **Modular Research Pipeline**  
-  Research nodes: Company Overview, Industry Analysis, Financial Summary, News Aggregation
+Optional MongoDB Persistence
+Store job metadata, intermediate outputs, and final reports for future retrieval.
 
-- 📡 **Real-Time WebSocket Updates**  
-  Live feedback from each research step
+Modern Tech Stack
 
-- 📄 **Markdown to PDF Report Generation**
+Backend: FastAPI · Uvicorn · Python · Pydantic
 
-- 🧠 **AI-Powered Engine**  
-  Powered by OpenAI GPT (default), Tavily, and Google Gemini (configurable)
+Frontend: React · Vite · TypeScript · Tailwind CSS · Lucide Icons
 
-- 💾 **Optional MongoDB Persistence**  
-  Store job metadata, intermediate outputs, and final reports
+AI: OpenAI GPT (default) · Tavily API · Google Gemini (configurable)
 
----
+Docs: Swagger UI available at /docs
 
-## 🧱 Tech Stack
-
-- **Backend**: FastAPI, Uvicorn, Python, Pydantic  
-- **Frontend**: React, Vite, TypeScript, Tailwind CSS, Lucide Icons  
-- **AI Providers**: OpenAI, Tavily API, Google Gemini  
-- **Docs**: Swagger UI at `/docs`
-
----
-
-## 📂 Project Structure
-
-Analyze-360/
-├── application.py # FastAPI entrypoint
-├── backend/
-│ ├── graph.py # Research graph builder/executor
-│ ├── nodes/ # Modular researcher logic
-│ ├── utils/ # Markdown → PDF utilities
-│ └── services/ # WebSocket, MongoDB, PDF services
-├── reports/ # Generated PDFs (gitignored)
-├── ui/ # React frontend
-│ ├── src/ # Components & logic
-│ ├── public/ # Static assets
-│ └── package.json # Frontend config
-├── langgraph.json # Node configs & DAG structure
-├── langgraph_entry.py # CLI-based execution
-├── requirements.txt # Python dependencies
-├── setup.sh # Setup script
-├── .env.example # Backend env template
-├── ui/.env.example # Frontend env template
-├── demo/
-│ └── Analyze-360-demo.mp4
-└── README.md
-
-yaml
+📂 Repository Structure
+text
 Copy
 Edit
+Analyze-360/
+├── application.py         # FastAPI entrypoint
+├── backend/
+│   ├── graph.py           # Research DAG orchestration
+│   ├── nodes/             # Researcher modules
+│   ├── utils/             # Markdown → PDF helpers
+│   └── services/          # WebSocket, MongoDB, PDF services
+├── reports/               # Generated PDFs (git-ignored)
+├── ui/                    # React + Vite frontend
+│   ├── src/               # Components & logic
+│   ├── public/            # Static assets
+│   └── package.json       # Frontend dependencies
+├── langgraph.json         # DAG configuration
+├── langgraph_entry.py     # CLI for offline graph runs
+├── requirements.txt       # Python dependencies
+├── setup.sh               # Bootstrap script
+├── .env.example           # Backend env-var template
+├── ui/.env.example        # Frontend env-var template
+├── demo/
+│   └── Analyze-360-demo.mp4
+└── README.md
+⚙️ Prerequisites
+Python 3.9 or newer
 
----
+Node.js 16 or newer (with npm)
 
-## ⚙️ Prerequisites
+MongoDB (optional, for persistence)
 
-- Python 3.9+
-- Node.js 16+
-- MongoDB *(optional)*
-
----
-
-## 🛠️ Installation Guide
-
-### 1. Clone the Repository
-
-```bash
+🛠️ Setup & Installation
+1 · Clone the Repository
+bash
+Copy
+Edit
 git clone https://github.com/rithiksingh/Analyze-360.git
 cd Analyze-360
-2. Backend Setup
+2 · Backend Setup
+Create & activate a virtual environment
+
 bash
 Copy
 Edit
 python3 -m venv .venv
-source .venv/bin/activate       # macOS/Linux
-# .\.venv\Scripts\activate      # Windows
-Install dependencies:
+source .venv/bin/activate      # macOS/Linux
+# .\.venv\Scripts\activate     # Windows
+Install Python dependencies
 
 bash
 Copy
 Edit
 pip install --upgrade pip
 pip install -r requirements.txt
-Configure environment variables:
+Configure environment variables
 
-env
+Create .env in the project root:
+
+dotenv
 Copy
 Edit
-# .env
 OPENAI_API_KEY=your_openai_key
 TAVILY_API_KEY=your_tavily_key
 GEMINI_API_KEY=your_gemini_key
-MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/dbname
-Start the backend server:
+# Optional:
+MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/yourdbname
+Start the FastAPI server
 
 bash
 Copy
 Edit
 uvicorn application:app --reload --port 8000
-API Docs: http://localhost:8000/docs
+Swagger UI → http://localhost:8000/docs
 
-WebSocket: ws://localhost:8000/ws/status
+WebSocket → ws://localhost:8000/ws/status
 
-3. Frontend Setup
+3 · Frontend Setup
+Open a new terminal and navigate to ui/
+
 bash
 Copy
 Edit
 cd ui
-npm install
-Configure environment variables:
+Install dependencies
 
-env
+bash
 Copy
 Edit
-# ui/.env
+npm install
+Configure frontend env vars
+
+Create ui/.env:
+
+dotenv
+Copy
+Edit
 VITE_API_URL=http://localhost:8000
 VITE_WS_URL=ws://localhost:8000/ws/status
-Run the frontend dev server:
+Start the Vite dev server
 
 bash
 Copy
 Edit
 npm run dev
-Visit: http://localhost:5173
+Open http://localhost:5173 in your browser.
 
 🚦 Usage
-Open the UI and input a company name or ticker.
+Open the web UI and enter a company name or ticker.
 
-Click Start Research.
+Click Start Research to launch the pipeline.
 
-Watch real-time status updates.
+Watch real-time progress in the Research Status panel.
 
-View the Markdown report.
+After completion, review the generated report.
 
-Click Download PDF to save the final output.
+Click Download PDF to save the final document.
+
+(Optional) Query past jobs via REST:
+
+Endpoint	Description
+GET /research/{job_id}	Fetch job metadata
+GET /research/{job_id}/report	Retrieve Markdown report
+POST /research/{job_id}/generate-pdf	Generate/download PDF
 
 🧩 Architecture Overview
-Research Graph:
-Directed acyclic graph defined in langgraph.json and executed in backend/graph.py.
+Graph Execution
+backend/graph.py loads and runs the DAG defined in langgraph.json.
 
-WebSocketService:
-Sends live node updates with timestamps.
+WebSocket Manager
+Streams node status events (in_progress → completed/failed) to clients.
 
-PDFService:
-Converts compiled Markdown to a styled PDF at reports/{job_id}.pdf.
+PDFService
+Converts Markdown to a styled PDF via ReportLab.
 
-MongoDBService (Optional):
-Stores metadata, intermediate outputs, and final reports.
+MongoDBService (optional)
+Persists jobs, node outputs, and reports when MONGODB_URI is set.
 
-React Frontend:
-Submits jobs, subscribes to WebSocket, shows progress, and renders Markdown.
+React Frontend
+Submits jobs, listens for WebSocket updates, and renders reports with PDF download.
 
 🏅 Bonus Features
-✅ Live Node Status
-Real-time updates via /ws/status
+✅ Live WebSocket Timeline
 
-✅ Historical Job Lookup
-Enabled by MongoDB (optional)
+✅ MongoDB Job History
 
 ✅ One-Click PDF Export
-POST to /research/{job_id}/generate-pdf
 
-✅ Error Handling
-Logs errors and displays fallback messages in the frontend
+✅ Robust Error Handling
 
-✅ Scalable Design
-Add/remove research steps by editing langgraph.json
+✅ Easily Extensible DAG
 
-✅ Security Focus
+✅ Secure Env-Var Management
 
-API keys in .env files
+✅ Responsive Dark/Light UI
 
-CORS-restricted endpoints
+🙌 Contributing
+Fork the repository.
 
-Input validation using Pydantic
+Create your feature branch:
 
-✅ Modern UX
-
-Responsive Tailwind UI
-
-Dark/Light mode
-
-Collapsible node panels
-
-Integrated LLM conversation history
-
-🤝 Contributing
 bash
 Copy
 Edit
-# Fork the repo
 git checkout -b feature/YourFeature
+Commit your changes:
 
-# Make your changes
-git add .
-git commit -m "Add: your feature"
+bash
+Copy
+Edit
+git commit -m "Add: Your feature"
+Push the branch:
 
-# Push and create a PR
+bash
+Copy
+Edit
 git push origin feature/YourFeature
+Open a Pull Request 🚀
+
 📚 References
 OpenAI
 
@@ -215,4 +212,6 @@ Google Gemini
 
 📬 Contact
 Author: Rithik Singh
-📧 Email: Hrithiksingh.hst@gmail.com
+📧 Hrithiksingh.hst@gmail.com
+
+Happy researching!
