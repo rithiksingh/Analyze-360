@@ -1,185 +1,155 @@
-# 🔍 Analyze-360
-
-An **AI-powered**, full-stack application for deep company due diligence.  
-Analyze-360 combines **LangGraph**, **OpenAI**, **Tavily**, and a modern React UI to research companies, stream real-time WebSocket updates, and generate polished PDF reports.
+# Analyze 360
+An AI-powered full‑stack application for performing in‑depth company due diligence. Company Researcher uses LangChain and OpenAI APIs to research companies, stream status updates over WebSockets, and generate professional‑grade reports and PDFs.
 
 ---
 
 ## 🚀 Features
 
-- **AI-Driven Research Pipeline**  
-  Modular graph of researcher nodes: *Company Overview*, *Industry Analysis*, *Financial Summary*, *News Aggregation*.
+* **AI‑Driven Research Pipeline**: Modular graph of researchers (company, industry, financial, news) with streaming updates.
+* **Streaming Status Updates**: Real‑time progress over WebSocket so you can visualize each research step.
+* **PDF Report Generation**: Convert compiled markdown reports into downloadable PDFs.
+* **Optional Persistence**: Integrate with MongoDB to store jobs and reports for later retrieval.
+* **Modern Tech Stack**:
 
-- **Streaming Status Updates**  
-  Real-time progress visualization over WebSockets as each node completes.
-
-- **PDF Report Generation**  
-  Compiles Markdown into styled, downloadable PDF files.
-
-- **Optional MongoDB Persistence**  
-  Store job metadata, intermediate outputs, and final reports.
-
-- **Modern Tech Stack**  
-  - **Backend:** FastAPI · Uvicorn · Python · Pydantic  
-  - **Frontend:** React · Vite · TypeScript · Tailwind CSS · Lucide Icons  
-  - **AI Providers:** OpenAI GPT (default) · Tavily API · Google Gemini (configurable)  
-  - **Docs:** Swagger UI available at `/docs`
+  * **Backend**: FastAPI, Uvicorn, Python, Pydantic
+  * **Frontend**: React, Vite, Typescript, Tailwind CSS, Lucide Icons
+  * **AI**: OpenAI GPT, Tavily API, Gemini API (configurable)
+  * **Docs**: Swagger‑UI at `/docs`
 
 ---
 
 ## 📂 Repository Structure
 
-```text
-Analyze-360/
-├── application.py         # FastAPI entrypoint
+```
+company-researcher/
+├── application.py        # FastAPI entrypoint
 ├── backend/
-│   ├── graph.py           # DAG orchestration
-│   ├── nodes/             # Researcher modules
-│   ├── utils/             # Markdown → PDF helpers
-│   └── services/          # WebSocket, MongoDB, PDF
-├── reports/               # Generated PDFs (git-ignored)
-├── ui/
-│   ├── src/               # React components & logic
-│   ├── public/            # Static assets
+│   ├── graph.py         # Core research graph orchestration
+│   ├── nodes/           # Researcher implementations
+│   ├── utils/           # PDF/markdown utils & reference extraction
+│   └── services/        # MongoDB, WebSocket, PDF services
+├── reports/             # Output PDF files
+├── ui/                  # React Vite frontend
+│   ├── src/
+│   │   └── App.tsx      # Main UI component
+│   ├── public/
 │   └── package.json
-├── langgraph.json         # DAG configuration
-├── langgraph_entry.py     # CLI runner
-├── requirements.txt
-├── setup.sh
-├── .env.example
-├── ui/.env.example
-└── README.md
-⚙️ Prerequisites
-Python 3.9 +
+├── .env                 # Backend environment variables
+├── ui/.env              # Frontend environment variables
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
+```
 
-Node.js 16 + (with npm)
+---
 
-MongoDB (optional, for persistence)
+## ⚙️ Prerequisites
 
-🛠️ Setup & Installation
-1 · Clone the repository
-bash
-Copy
-Edit
-git clone https://github.com/rithiksingh/Analyze-360.git
-cd Analyze-360
-2 · Backend
-bash
-Copy
-Edit
-# Create & activate virtual env
-python3 -m venv .venv
-source .venv/bin/activate      # macOS/Linux
-# .\.venv\Scripts\activate     # Windows
-bash
-Copy
-Edit
-# Install Python deps
-pip install --upgrade pip
-pip install -r requirements.txt
-Create a .env file:
+* **Python 3.9+**
+* **Node.js 16+** and **npm**
+* **MongoDB** (optional, for persistence)
 
-dotenv
-Copy
-Edit
-OPENAI_API_KEY=your_openai_key
-TAVILY_API_KEY=your_tavily_key
-GEMINI_API_KEY=your_gemini_key
-# Optional:
-MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/yourdb
-bash
-Copy
-Edit
-# Run FastAPI server
-uvicorn application:app --reload --port 8000
-Swagger UI → http://localhost:8000/docs
+---
 
-WebSocket → ws://localhost:8000/ws/status
+## 🛠️ Setup & Installation
 
-3 · Frontend
-bash
-Copy
-Edit
-cd ui
-npm install
-Create ui/.env:
+### 1. Clone & Navigate
 
-dotenv
-Copy
-Edit
-VITE_API_URL=http://localhost:8000
-VITE_WS_URL=ws://localhost:8000/ws/status
-bash
-Copy
-Edit
-npm run dev
-Open http://localhost:5173 in your browser.
+```bash
+git clone https://github.com/pogjester/company-research-agent.git company-researcher
+cd company-researcher
+```
 
-🚦 Usage
-Open the UI and enter a company name or ticker.
+### 2. Backend Setup
 
-Click Start Research.
+1. Create & activate a virtual environment:
 
-Watch real-time status updates.
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate     # macOS/Linux
+   .\.venv\Scripts\activate    # Windows PowerShell
+   ```
 
-Review the generated report.
+2. Install Python dependencies:
 
-Click Download PDF.
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
 
-REST API
-Method & Path	Purpose
-GET /research/{job_id}	Job metadata
-GET /research/{job_id}/report	Markdown report
-POST /research/{job_id}/generate-pdf	Generate / return PDF
+3. Create a `.env` in the project root with your API keys:
 
-🧩 Architecture Overview
-Graph Execution — backend/graph.py runs the DAG in langgraph.json.
+   ```dotenv
+   TAVILY_API_KEY=your_tavily_key
+   GEMINI_API_KEY=your_gemini_key
+   OPENAI_API_KEY=your_openai_key
+   # Optional: MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.mongodb.net/dbname
+   ```
 
-WebSocket Manager — streams node events (in_progress → completed/failed).
+4. Start the FastAPI server:
 
-PDFService — Markdown → PDF with ReportLab.
+   ```bash
+   uvicorn application:app --reload --port 8000
+   ```
 
-MongoDBService (optional) — job persistence.
+### 3. Frontend Setup
 
-React Frontend — submits jobs, listens for updates, renders reports.
+1. In a new terminal, navigate to the UI folder:
 
-🏅 Bonus Features
-✅ Live WebSocket timeline
+   ```bash
+   cd ui
+   ```
+2. Install npm packages:
 
-✅ MongoDB job history
+   ```bash
+   npm install
+   ```
+3. Create `ui/.env` with:
 
-✅ One-click PDF export
+   ```dotenv
+   VITE_API_URL=http://localhost:8000
+   VITE_WS_URL=ws://localhost:8000
+   ```
+4. Start the Vite dev server:
 
-✅ Robust error handling
+   ```bash
+   npm run dev
+   ```
+5. Open your browser at [http://localhost:5173](http://localhost:5173)
 
-✅ Extensible DAG
+---
 
-✅ Secure env-var management
+## 🚀 Usage
 
-✅ Responsive dark/light UI
+1. Enter company details in the UI form and click **Start Research**.
+2. Watch real‑time progress in the **Research Status** panel.
+3. When complete, view the generated report and click **Download PDF**.
+4. (Optional) Query past jobs via REST endpoints:
 
-🙌 Contributing
-bash
-Copy
-Edit
-# 1. Fork the repo
-# 2. Create a feature branch
-git checkout -b feature/YourFeature
+   * **GET** `/research/{job_id}`
+   * **GET** `/research/{job_id}/report`
+   * **POST** `/research/{job_id}/generate-pdf`
 
-# 3. Commit & push
-git add .
-git commit -m "Add: Your feature"
-git push origin feature/YourFeature
-Then open a Pull Request 🚀
+---
 
-📚 References
-https://openai.com/
+## 🧩 Architecture Overview
 
-https://tavily.com/
+* **Graph Orchestration**: `backend/graph.py` builds a directed acyclic graph of researcher nodes.
+* **WebSocketManager**: Handles client subscriptions and status broadcasts.
+* **PDFService**: Renders markdown to PDF via ReportLab.
+* **MongoDBService**: Persists job metadata and report content.
 
-https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini
+---
 
-📬 Contact
-Author: Rithik Singh
-📧 Hrithiksingh.hst@gmail.com
+## 🙌 Contributing
 
+1. Fork the repo
+2. Create a feature branch `git checkout -b feature/YourFeature`
+3. Commit changes \`git commit -m "Add feature"
+4. Push to the branch `git push origin feature/YourFeature`
+5. Open a Pull Request
+
+---
+## References 🙏
+
+- [Tavily](https://tavily.com/) for the research API
+- [Google Gemini](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini) for the text generation model
