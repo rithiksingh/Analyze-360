@@ -156,6 +156,23 @@ cd company-researcher
    * **POST** `/research/{job_id}/generate-pdf`
 
 ---
+## 📡 API Reference
+
+All REST paths are relative to your FastAPI base URL (`http://localhost:8000`).  
+A single WebSocket endpoint streams real-time node-status events.
+
+| # | Method | Path | Purpose | Typical Client Action |
+|---|--------|------|---------|-----------------------|
+| 1 | **POST** | `/research/start` | Create a new research job and return a `job_id`. | Fired when the user clicks **Start Research**. |
+| 2 | **GET**  | `/research/{job_id}` | Retrieve saved job metadata (company, timestamps, node list, status). | Used by the UI to resume a previous session. |
+| 3 | **GET**  | `/research/{job_id}/report` | Return the compiled Markdown report (`text/markdown`). | Fills the Markdown viewer in the frontend. |
+| 4 | **POST** | `/research/{job_id}/generate-pdf` | Convert Markdown → PDF and return the file (`application/pdf`). | Powers the **Download PDF** button. |
+| 5 | **DELETE** | `/research/{job_id}` | *(Optional)* Remove a job and its artifacts from MongoDB/disk. | Admin or cleanup script. |
+| – | **WebSocket** | `ws://<host>/ws/status` | Push JSON events for each node: `{job_id, node, status, timestamp}`. | Timeline component subscribes for live updates. |
+
+---
+
+
 
 ## 🧩 Architecture Overview
 
