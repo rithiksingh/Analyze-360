@@ -2,6 +2,8 @@
 An AI-powered full‑stack application for performing in‑depth company due diligence. Company Researcher uses LangChain and OpenAI APIs to research companies, stream status updates over WebSockets, and generate professional‑grade reports and PDFs.
 
 ---
+[![Watch the demo](https://via.placeholder.com/800x450.png?text=Click+to+Watch+Demo)](https://drive.google.com/file/d/1A7Q88craIzqvsxvRODxQsbJtKz1WTVj_/view?usp=sharing)
+
 
 ## 🚀 Features
 
