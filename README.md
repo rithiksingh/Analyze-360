@@ -18,6 +18,42 @@ An AI-powered full‑stack application for performing in‑depth company due dil
   * **Frontend**: React, Vite, Typescript, Tailwind CSS, Lucide Icons
   * **AI**: OpenAI GPT, Tavily API, Gemini API (configurable)
   * **Docs**: Swagger‑UI at `/docs`
+  
+##  🏅 Bonus Features
+✅ Live Node Status
+Real-time updates via /ws/status
+
+✅ Historical Job Lookup
+Enabled by MongoDB (optional)
+
+✅ One-Click PDF Export
+POST to /research/{job_id}/generate-pdf
+
+✅ Error Handling
+Logs errors and displays fallback messages in the frontend
+
+✅ Scalable Design
+Add/remove research steps by editing langgraph.json
+
+✅ Security Focus
+
+API keys in .env files
+
+CORS-restricted endpoints
+
+Input validation using Pydantic
+
+✅ Modern UX
+
+Responsive Tailwind UI
+
+Dark/Light mode
+
+Collapsible node panels
+
+Integrated LLM conversation history
+
+
 
 ---
 
